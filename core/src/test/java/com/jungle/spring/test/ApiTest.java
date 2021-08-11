@@ -1,9 +1,12 @@
 package com.jungle.spring.test;
 
-import com.jungle.spring.BeansException;
-import com.jungle.spring.fatcotry.config.BeanDefinition;
-import com.jungle.spring.fatcotry.BeanFactory;
-import com.jungle.spring.fatcotry.support.DefaultListableBeanFactory;
+import com.jungle.spring.beans.BeanReference;
+import com.jungle.spring.beans.BeansException;
+import com.jungle.spring.beans.PropertyValue;
+import com.jungle.spring.beans.PropertyValues;
+import com.jungle.spring.beans.fatcotry.config.BeanDefinition;
+import com.jungle.spring.beans.fatcotry.support.DefaultListableBeanFactory;
+import com.jungle.spring.test.bean.UserDao;
 import com.jungle.spring.test.bean.UserService;
 import org.junit.Test;
 
@@ -13,11 +16,14 @@ public class ApiTest {
     public void testBeanFactory() throws BeansException {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
+        beanFactory.registerBeanDefinition("userDao", new BeanDefinition(UserDao.class));
 
+        PropertyValues propertyValues = new PropertyValues();
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class, propertyValues);
         beanFactory.registerBeanDefinition("userService", beanDefinition);
-
-        UserService service = (UserService) beanFactory.getBean("userService", "你好");
+        propertyValues.addPropertyValue(new PropertyValue("id", "10002"));
+        propertyValues.addPropertyValue(new PropertyValue("userDao", new BeanReference("userDao")));
+        UserService service = (UserService) beanFactory.getBean("userService");
         service.queryUserInfo();
     }
 

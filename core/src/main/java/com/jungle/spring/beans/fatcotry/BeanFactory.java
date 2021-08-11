@@ -1,10 +1,6 @@
-package com.jungle.spring.fatcotry;
+package com.jungle.spring.beans.fatcotry;
 
-import com.jungle.spring.BeansException;
-import com.jungle.spring.fatcotry.config.BeanDefinition;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.jungle.spring.beans.BeansException;
 
 /**
  * Bean 工厂类

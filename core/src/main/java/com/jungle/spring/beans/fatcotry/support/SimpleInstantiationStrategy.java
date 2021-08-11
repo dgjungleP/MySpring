@@ -1,12 +1,23 @@
-package com.jungle.spring.fatcotry.support;
+package com.jungle.spring.beans.fatcotry.support;
 
-import com.jungle.spring.BeansException;
-import com.jungle.spring.fatcotry.config.BeanDefinition;
+import com.jungle.spring.beans.BeansException;
+import com.jungle.spring.beans.fatcotry.config.BeanDefinition;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * JDK生成实现
+ */
 public class SimpleInstantiationStrategy implements InstantiationStrategy {
+    /**
+     * @param beanDefinition Bean 对象定义
+     * @param beanName       Bean对象名称
+     * @param ctor           Bean对象构造器
+     * @param args           Bean对象构造参数
+     * @return
+     * @throws BeansException
+     */
     @Override
     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor<?> ctor, Object[] args) throws BeansException {
         Class<?> beanClass = beanDefinition.getBeanClass();

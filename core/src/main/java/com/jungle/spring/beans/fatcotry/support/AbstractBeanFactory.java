@@ -1,8 +1,8 @@
-package com.jungle.spring.fatcotry.support;
+package com.jungle.spring.beans.fatcotry.support;
 
-import com.jungle.spring.BeansException;
-import com.jungle.spring.fatcotry.BeanFactory;
-import com.jungle.spring.fatcotry.config.BeanDefinition;
+import com.jungle.spring.beans.BeansException;
+import com.jungle.spring.beans.fatcotry.BeanFactory;
+import com.jungle.spring.beans.fatcotry.config.BeanDefinition;
 
 /**
  * 抽象Bean工厂模板类

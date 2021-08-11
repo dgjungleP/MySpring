@@ -1,6 +1,6 @@
-package com.jungle.spring.fatcotry.support;
+package com.jungle.spring.beans.fatcotry.support;
 
-import com.jungle.spring.fatcotry.config.SingletonBeanRegistry;
+import com.jungle.spring.beans.fatcotry.config.SingletonBeanRegistry;
 
 import java.util.HashMap;
 import java.util.Map;

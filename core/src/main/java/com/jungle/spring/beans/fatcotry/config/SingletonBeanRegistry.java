@@ -1,4 +1,4 @@
-package com.jungle.spring.fatcotry.config;
+package com.jungle.spring.beans.fatcotry.config;
 
 /**
  * 单例类注册接口
