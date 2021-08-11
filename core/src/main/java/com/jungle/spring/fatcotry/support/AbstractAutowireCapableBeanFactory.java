@@ -59,6 +59,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 break;
             }
         }
-        return instantiationStrategy.instantiate(beanDefinition, beanName, constructorToUse, args);
+        return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
+    }
+
+    protected InstantiationStrategy getInstantiationStrategy() {
+        return this.instantiationStrategy;
     }
 }
