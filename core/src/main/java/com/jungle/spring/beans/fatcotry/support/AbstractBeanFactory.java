@@ -3,11 +3,20 @@ package com.jungle.spring.beans.fatcotry.support;
 import com.jungle.spring.beans.BeansException;
 import com.jungle.spring.beans.fatcotry.BeanFactory;
 import com.jungle.spring.beans.fatcotry.config.BeanDefinition;
+import com.jungle.spring.beans.fatcotry.config.BeanPostProcessor;
+import com.jungle.spring.beans.fatcotry.config.ConfigurableBeanFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 抽象Bean工厂模板类
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+    /**
+     * BeanPostProcessors to apply in createBean
+     */
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     @Override
     public Object getBean(String beanName, Object... args) throws BeansException {
@@ -53,4 +62,14 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      * @throws BeansException
      */
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        this.beanPostProcessors.remove(beanPostProcessor);
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return beanPostProcessors;
+    }
 }

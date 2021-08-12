@@ -2,6 +2,8 @@ package com.jungle.spring.beans.fatcotry.support;
 
 import cn.hutool.core.bean.BeanException;
 import cn.hutool.core.bean.BeanUtil;
+import com.jungle.spring.beans.fatcotry.config.AutowireCapableBeanFactory;
+import com.jungle.spring.beans.fatcotry.config.BeanPostProcessor;
 import com.jungle.spring.beans.fatcotry.config.BeanReference;
 import com.jungle.spring.beans.BeansException;
 import com.jungle.spring.beans.PropertyValue;
@@ -13,7 +15,7 @@ import java.lang.reflect.Constructor;
 /**
  * Bean工厂Bean实例化类
  */
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 
     /**
@@ -29,12 +31,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         try {
             bean = createBeanInstance(beanDefinition, beanName, args);
             applyPropertyValues(beanName, bean, beanDefinition);
+            bean = initializeBean(beanName, bean, beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
         addSingleton(beanName, bean);
         return bean;
     }
+
 
     private void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
@@ -82,5 +86,37 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
+    }
+
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) throws BeansException {
+        Object wrapperBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
+        invokeInitMethods(beanName, wrapperBean, beanDefinition);
+        wrapperBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        return wrapperBean;
+    }
+
+    private void invokeInitMethods(String beanName, Object wrapperBean, BeanDefinition beanDefinition) {
+    }
+
+    @Override
+    public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessBeforeInitialization(result, beanName);
+            if (null == current) return result;
+            result = current;
+        }
+        return result;
+    }
+
+    @Override
+    public Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessAfterInitialization(result, beanName);
+            if (null == current) return result;
+            result = current;
+        }
+        return result;
     }
 }
