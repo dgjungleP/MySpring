@@ -2,7 +2,7 @@ package com.jungle.spring.beans.fatcotry.support;
 
 import cn.hutool.core.bean.BeanException;
 import cn.hutool.core.bean.BeanUtil;
-import com.jungle.spring.beans.BeanReference;
+import com.jungle.spring.beans.fatcotry.config.BeanReference;
 import com.jungle.spring.beans.BeansException;
 import com.jungle.spring.beans.PropertyValue;
 import com.jungle.spring.beans.PropertyValues;

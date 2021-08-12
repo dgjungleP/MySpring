@@ -13,8 +13,7 @@ public class BeanDefinition {
     private PropertyValues propertyValues;
 
     public BeanDefinition(Class<?> beanClass) {
-        this.beanClass = beanClass;
-        this.propertyValues = new PropertyValues();
+        this(beanClass, null);
     }
 
     public Class<?> getBeanClass() {
@@ -22,9 +21,11 @@ public class BeanDefinition {
     }
 
     public BeanDefinition(Class<?> beanClass, PropertyValues propertyValues) {
-        this(beanClass);
+        this.beanClass = beanClass;
         if (propertyValues != null) {
             this.propertyValues = propertyValues;
+        } else {
+            this.propertyValues = new PropertyValues();
         }
     }
 

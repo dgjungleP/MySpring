@@ -10,7 +10,7 @@ import java.util.Map;
  * 核心实现类
  */
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry {
-    private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
+    private final Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
 
     /**
      * @param beanName Bean注册名称
@@ -34,4 +34,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
         beanDefinitionMap.put(beanName, beanDefinition);
     }
+
+    @Override
+    public boolean containBeanDefinition(String beanName) {
+        return beanDefinitionMap.containsKey(beanName);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.jungle.spring.beans;
+package com.jungle.spring.beans.fatcotry.config;
 
 /**
  * Bean实例中的对象引用
